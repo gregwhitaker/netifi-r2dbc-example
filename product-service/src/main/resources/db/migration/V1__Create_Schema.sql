@@ -15,7 +15,6 @@
 --
 
 -- DDL --
-
 CREATE TABLE products (
     id              BIGSERIAL       PRIMARY KEY,
     active          BOOLEAN         DEFAULT TRUE NOT NULL,
