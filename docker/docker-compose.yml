@@ -11,6 +11,15 @@ services:
       - "7001:7001"
       - "8001:8001"
       - "8101:8101"
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_DB=postgres"
+    ports:
+      - "54320:5432"
 
   product-service:
     container_name: product-service
@@ -19,6 +28,7 @@ services:
       - "SPRING_PROFILES_ACTIVE=docker"
     depends_on:
       - broker1
+      - db
 
   store-app:
     container_name: store-app
