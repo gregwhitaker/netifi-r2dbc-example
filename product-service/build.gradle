@@ -11,7 +11,7 @@ plugins {
 dependencies {
     protobuf project(':product-service-idl')
 
-    implementation "com.netifi:netifi-spring-boot-starter"
+    implementation 'com.netifi:netifi-spring-boot-starter'
 }
 
 mainClassName = 'example.service.product.ProductServiceApplication'
