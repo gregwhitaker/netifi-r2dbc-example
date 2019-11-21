@@ -9,7 +9,7 @@ option java_multiple_files = true;
 service ProductService {
 
     // Gets product information.
-    rpc GetProductInfo (ProductInfoRequest) returns (ProductInfoResponse) {}
+    rpc GetProduct (ProductInfoRequest) returns (ProductInfoResponse) {}
 }
 
 message ProductInfoRequest {
