@@ -15,9 +15,11 @@
  */
 package example.service.product.data;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductDao {
-
+    private static final Logger LOG = LoggerFactory.getLogger(ProductDao.class);
 }
