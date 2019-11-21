@@ -1,8 +1,20 @@
 # netifi-r2dbc-example
+An example of accessing a database using [R2DBC](https://r2dbc.io) in a [Netifi](https://www.netifi.com) RSocket application.
 
 ## Building the Example
+Run the following command to build the example:
+
+    ./gradlew clean buildImage
 
 ## Running the Example
+Follow the steps below to run the example application:
+
+1. Start a Netifi Broker and the example services using the following commands:
+
+        cd docker
+        docker-compose up
+        
+2. In a web browser, access the store front at [http://localhost:8080/product/001](http://localhost:8080/product/001).
 
 ## Bugs and Feedback
 For bugs, questions, and discussions please use the [Github Issues](https://github.com/gregwhitaker/netifi-r2dbc-example/issues).
