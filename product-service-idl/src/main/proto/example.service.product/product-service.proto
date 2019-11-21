@@ -17,7 +17,7 @@ message ProductInfoRequest {
 }
 
 message ProductInfoResponse {
-    string productId = 1;
+    int64 productId = 1;
     string shortName = 2;
     string longName = 3;
     string description = 4;
@@ -29,7 +29,7 @@ message SkuInfo {
     string sku = 1;
     bool active = 2;
     string size = 3;
-    string color = 4;
+    string colorway = 4;
     PriceInfo prices = 5;
 }
 
