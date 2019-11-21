@@ -33,6 +33,7 @@ mainClassName = 'example.service.product.ProductServiceApplication'
 flyway {
     url = 'jdbc:postgresql://localhost:54320/postgres'
     user = 'postgres'
+    password = 'postgres'
 }
 
 // Packaging
@@ -48,13 +49,13 @@ protobuf {
     protoc {
         artifact = 'com.google.protobuf:protoc'
     }
-    
+
     plugins {
         rsocketRpc {
             artifact = 'io.rsocket.rpc:rsocket-rpc-protobuf'
         }
     }
-    
+
     generateProtoTasks {
         all().each { task ->
             task.plugins {
