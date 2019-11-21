@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     private static final Logger LOG = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Override
-    public Mono<ProductInfoResponse> getProductInfo(ProductInfoRequest message, ByteBuf metadata) {
+    public Mono<ProductInfoResponse> getProduct(ProductInfoRequest message, ByteBuf metadata) {
         return null;
     }
 }
