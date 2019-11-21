@@ -1,7 +1,8 @@
 plugins {
     id "com.gradle.build-scan" version "3.0"
     id "net.saliman.properties" version "1.4.6"
-    id 'org.springframework.boot' version '2.1.5.RELEASE' apply false
+    id "com.github.hierynomus.license" version "0.14.0"
+    id "org.springframework.boot" version "2.1.5.RELEASE" apply false
     id "io.spring.dependency-management" version "1.0.7.RELEASE" apply false
     id "com.google.protobuf" version "0.8.10" apply false
 }
@@ -12,8 +13,9 @@ buildScan {
 }
 
 allprojects {
-    apply plugin: 'idea'
-    apply plugin: 'net.saliman.properties'
+    apply plugin: "idea"
+    apply plugin: "net.saliman.properties"
+    apply plugin: "com.github.hierynomus.license"
 
     ext {
         // Dependency Versions
@@ -28,6 +30,12 @@ allprojects {
     repositories {
         mavenCentral()
         jcenter()
+    }
+
+    license {
+        header rootProject.file('codequality/LICENSE_HEADER')
+        strictCheck true
+        excludes([ "**/*.json", "**/*.html", "**/*.js", "**/*.jpg" ])
     }
 }
 
