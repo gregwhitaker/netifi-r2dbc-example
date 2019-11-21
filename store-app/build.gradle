@@ -13,9 +13,18 @@ dependencies {
 
     implementation 'com.netifi:netifi-spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'io.projectreactor:reactor-test'
 }
 
 mainClassName = 'example.storeapp.StoreApplication'
+
+test {
+    useJUnitPlatform()
+}
 
 // Packaging
 task buildImage(type: DockerBuildImage, dependsOn: build) {
