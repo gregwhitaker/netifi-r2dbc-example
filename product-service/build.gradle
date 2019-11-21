@@ -48,11 +48,13 @@ protobuf {
     protoc {
         artifact = 'com.google.protobuf:protoc'
     }
+    
     plugins {
         rsocketRpc {
             artifact = 'io.rsocket.rpc:rsocket-rpc-protobuf'
         }
     }
+    
     generateProtoTasks {
         all().each { task ->
             task.plugins {
