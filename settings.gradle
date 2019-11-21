@@ -1,0 +1,5 @@
+rootProject.name = 'netifi-r2dbc-example'
+include 'product-service'
+include 'store-app'
+include 'product-service-idl'
+
