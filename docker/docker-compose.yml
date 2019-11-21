@@ -1,0 +1,13 @@
+version: "3.5"
+
+services:
+  broker1:
+    container_name: broker1
+    image: netifi/broker:${DOCKER_BROKER_IMAGE_VERSION}
+    environment:
+      - "BROKER_SERVER_OPTS=-Dnetifi.broker.ssl.disabled=${NETIFI_BROKER_SSL_DISABLED} -Dnetifi.broker.cluster.clusterName=${NETIFI_BROKER_CLUSTER_CLUSTERNAME} -Dnetifi.authentication.0.accessKey=${NETIFI_AUTHENTICATION_0_ACCESSKEY} -Dnetifi.authentication.0.accessToken=${NETIFI_AUTHENTICATION_0_ACCESSTOKEN} -Dnetifi.broker.admin.accessKey=${NETIFI_BROKER_ADMIN_ACCESSKEY} -Dnetifi.broker.admin.accessToken=${NETIFI_BROKER_ADMIN_ACCESSTOKEN} -Dnetifi.broker.admin.address=broker1 -Dnetifi.broker.admin.publicAddress=broker1 -Dnetifi.broker.admin.port=6001 -Dnetifi.broker.cluster.address=broker1 -Dnetifi.broker.cluster.publicAddress=broker1 -Dnetifi.broker.cluster.port=7001 -Dnetifi.broker.tcp.address=broker1 -Dnetifi.broker.tcp.publicAddress=broker1 -Dnetifi.broker.tcp.port=8001 -Dnetifi.broker.websocket.address=broker1 -Dnetifi.broker.websocket.publicAddress=broker1 -Dnetifi.broker.websocket.port=8101"
+    ports:
+      - "6001:6001"
+      - "7001:7001"
+      - "8001:8001"
+      - "8101:8101"
