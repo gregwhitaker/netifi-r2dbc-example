@@ -12,8 +12,8 @@ services:
       - "8001:8001"
       - "8101:8101"
 
-  db:
-    container_name: db
+  product-db:
+    container_name: product-db
     image: postgres
     environment:
       - "POSTGRES_USER=postgres"
@@ -29,7 +29,7 @@ services:
       - "SPRING_PROFILES_ACTIVE=docker"
     depends_on:
       - broker1
-      - db
+      - product-db
 
   store-app:
     container_name: store-app
