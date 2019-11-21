@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package example.service.product;
+
+option java_package = "example.service.product.protobuf";
+option java_outer_classname = "ProductServiceProto";
+option java_multiple_files = true;
+
+service ProductService {
+
+    // Gets product information.
+    rpc GetProductInfo (ProductInfoRequest) returns (ProductInfoResponse) {}
+}
+
+message ProductInfoRequest {
+    string productId = 1;
+}
+
+message ProductInfoResponse {
+    string productId = 1;
+    string shortName = 2;
+    string longName = 3;
+    string description = 4;
+    bool active = 5;
+    repeated SkuInfo skus = 6;
+}
+
+message SkuInfo {
+    string sku = 1;
+    bool active = 2;
+    string size = 3;
+    string color = 4;
+    PriceInfo prices = 5;
+}
+
+message PriceInfo {
+    double list = 1;
+    double msrp = 2;
+    double sale = 3;
+    string formattedList = 4;
+    string formattedMsrp = 5;
+    string formattedSale = 6;
+}
