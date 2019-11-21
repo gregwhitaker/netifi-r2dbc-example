@@ -11,3 +11,21 @@ services:
       - "7001:7001"
       - "8001:8001"
       - "8101:8101"
+
+  product-service:
+    container_name: product-service
+    image: netifi-r2dbc-example/product-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    depends_on:
+      - broker1
+
+  store-app:
+    container_name: store-app
+    image: netifi-r2dbc-example/store-app
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - broker1
