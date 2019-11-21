@@ -12,12 +12,12 @@ This Docker Compose script will create the following containers:
 - `product-service` - The example product information service.
 - `store-app` - The example storefront application. 
     
-# Stopping the Example
+## Stopping the Example
 In the current directory, run the following command to stop the example:
 
     docker-compose kill
     
-# Remove the Example Containers
+## Removing the Example Containers
 In the current directory, run the following command to remove the Docker containers created by this example:
 
     docker-compose rm 
