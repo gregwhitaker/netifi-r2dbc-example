@@ -1,12 +1,14 @@
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
 plugins {
-    id 'java'
-    id 'application'
-    id 'org.springframework.boot'
-    id 'com.google.protobuf'
-    id 'com.bmuschko.docker-remote-api' version '3.4.4'
+    id "java"
+    id "application"
+    id "org.springframework.boot"
+    id "com.google.protobuf"
+    id "com.bmuschko.docker-remote-api"
 }
+
+mainClassName = 'example.storeapp.StoreApplication'
 
 dependencies {
     protobuf project(':product-service-idl')
@@ -20,8 +22,7 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
 }
 
-mainClassName = 'example.storeapp.StoreApplication'
-
+// Test
 test {
     useJUnitPlatform()
 }
@@ -34,6 +35,7 @@ task buildImage(type: DockerBuildImage, dependsOn: build) {
     tags = ["netifi-r2dbc-example/${projectDir.name}", "netifi-r2dbc-example/${projectDir.name}:${version}"]
 }
 
+// RSocket RPC
 protobuf {
     protoc {
         artifact = 'com.google.protobuf:protoc'
