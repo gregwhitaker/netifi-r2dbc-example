@@ -31,16 +31,19 @@ public class ProductDao {
     private R2dbc r2dbc;
 
     public Mono<ProductInfoResponse> getProduct(long productId) {
-        return Mono.defer(() -> r2dbc.withHandle(handle ->
-                handle.select("SELECT * FROM products WHERE id = $1", productId)
+        return Mono.defer(() -> r2dbc.withHandle(handle -> {
+            final String sql = "SELECT * FROM products WHERE id = $1";
+
+            return handle.select(sql, productId)
                     .mapRow((row, rowMetadata) -> ProductInfoResponse.newBuilder()
-                        .setProductId(row.get("id", Long.class))
-                        .setActive(row.get("active", Boolean.class))
-                        .setShortName(row.get("short_name", String.class))
-                        .setLongName(row.get("long_name", String.class))
-                        .setDescription(row.get("description", String.class))
-                        .build())
-                    .next())
-                .next());
+                            .setProductId(row.get("id", Long.class))
+                            .setActive(row.get("active", Boolean.class))
+                            .setShortName(row.get("short_name", String.class))
+                            .setLongName(row.get("long_name", String.class))
+                            .setDescription(row.get("description", String.class))
+                            .build())
+                    .next();
+        })
+        .next());
     }
 }
