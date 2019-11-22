@@ -15,13 +15,38 @@
  */
 package example.storeapp;
 
+import com.netifi.spring.core.annotation.Group;
+import example.service.product.protobuf.ProductInfoRequest;
+import example.service.product.protobuf.ProductInfoResponse;
+import example.service.product.protobuf.ProductServiceClient;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 public class StoreApplication {
 
     public static void main(String... args) {
         SpringApplication.run(StoreApplication.class, args);
+    }
+
+    @Component
+    public class Runner implements CommandLineRunner {
+
+        @Group("example.service.product")
+        private ProductServiceClient productClient;
+
+        @Override
+        public void run(String... args) throws Exception {
+            ProductInfoRequest request = ProductInfoRequest.newBuilder()
+                    .setProductId(1)
+                    .build();
+
+            ProductInfoResponse response = productClient.getProduct(request)
+                    .block();
+
+            System.out.println(response);
+        }
     }
 }
