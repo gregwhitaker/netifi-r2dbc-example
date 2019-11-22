@@ -41,6 +41,7 @@ public class DataConfiguration {
                 .database(settings.getName())
                 .username(settings.getUsername())
                 .password(settings.getPassword())
+                .applicationName("product-service")
                 .build();
 
         return new PostgresqlConnectionFactory(config);

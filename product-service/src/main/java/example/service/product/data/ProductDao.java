@@ -17,11 +17,15 @@ package example.service.product.data;
 
 import example.service.product.protobuf.ProductInfoResponse;
 import io.r2dbc.pool.ConnectionPool;
+import io.r2dbc.spi.Result;
+import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.util.function.Function;
 
 @Component
 public class ProductDao {
@@ -31,6 +35,19 @@ public class ProductDao {
     private ConnectionPool connPool;
 
     public Mono<ProductInfoResponse> getProduct(long productId) {
+//        return connPool.create()
+//                .flatMapMany(conn -> conn
+//                        .createStatement("SELECT * FROM products WHERE id = $1")
+//                        .bind("$1", productId)
+//                        .execute())
+//                .flatMap(new Function<Result, Publisher<ProductInfoResponse>>() {
+//                    @Override
+//                    public Publisher<ProductInfoResponse> apply(Result result) {
+//                        return Mono.fromSupplier(() -> {
+//
+//                        });
+//                    }
+//                });
         return null;
     }
 }
