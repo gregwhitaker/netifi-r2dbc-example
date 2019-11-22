@@ -31,7 +31,8 @@ dependencies {
     implementation 'com.netifi:netifi-spring-boot-starter'
     implementation 'org.postgresql:postgresql:42.2.5'
     implementation 'org.flywaydb:flyway-core'
-    implementation 'io.r2dbc:r2dbc-postgresql:1.0.0.M6'
+    implementation 'io.r2dbc:r2dbc-spi:1.0.0.M7'
+    implementation 'io.r2dbc:r2dbc-postgresql:1.0.0.M7'
     implementation 'io.r2dbc:r2dbc-pool:0.8.0.M8'
 }
 
