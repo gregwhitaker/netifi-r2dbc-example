@@ -13,7 +13,7 @@ service ProductService {
 }
 
 message ProductInfoRequest {
-    string productId = 1;
+    int64 productId = 1;
 }
 
 message ProductInfoResponse {
