@@ -16,16 +16,23 @@
 package example.service.product.config;
 
 import example.service.product.config.settings.DatabaseSettings;
-import io.r2dbc.pool.ConnectionPool;
-import io.r2dbc.pool.ConnectionPoolConfiguration;
-import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
-import io.r2dbc.postgresql.PostgresqlConnectionFactory;
+import io.r2dbc.client.R2dbc;
+import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
+import io.r2dbc.spi.ConnectionFactoryOptions;
+import io.r2dbc.spi.Option;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
-import java.time.Duration;
+import static io.r2dbc.spi.ConnectionFactoryOptions.DATABASE;
+import static io.r2dbc.spi.ConnectionFactoryOptions.DRIVER;
+import static io.r2dbc.spi.ConnectionFactoryOptions.HOST;
+import static io.r2dbc.spi.ConnectionFactoryOptions.PASSWORD;
+import static io.r2dbc.spi.ConnectionFactoryOptions.PORT;
+import static io.r2dbc.spi.ConnectionFactoryOptions.PROTOCOL;
+import static io.r2dbc.spi.ConnectionFactoryOptions.USER;
 
 @Configuration
 @EnableConfigurationProperties({
@@ -35,25 +42,27 @@ public class DataConfiguration {
 
     @Bean
     public ConnectionFactory connectionFactory(DatabaseSettings settings) {
-        PostgresqlConnectionConfiguration config = PostgresqlConnectionConfiguration.builder()
-                .host(settings.getHostname())
-                .port(settings.getPort())
-                .database(settings.getName())
-                .username(settings.getUsername())
-                .password(settings.getPassword())
-                .applicationName("product-service")
-                .build();
+        final ConnectionFactoryOptions.Builder cfob = ConnectionFactoryOptions.builder();
 
-        return new PostgresqlConnectionFactory(config);
+        cfob.option(DRIVER, "pool");
+        cfob.option(PROTOCOL, "postgresql");
+        cfob.option(HOST, settings.getHostname());
+        cfob.option(PORT, settings.getPort());
+        cfob.option(DATABASE, settings.getName());
+
+        if (!StringUtils.isEmpty(settings.getUsername())) {
+            cfob.option(USER, settings.getUsername());
+        }
+
+        if (!StringUtils.isEmpty(settings.getPassword())) {
+            cfob.option(PASSWORD, settings.getPassword());
+        }
+
+        return ConnectionFactories.get(cfob.build());
     }
 
     @Bean
-    public ConnectionPool connectionPool(ConnectionFactory connectionFactory, DatabaseSettings settings) {
-        ConnectionPoolConfiguration configuration = ConnectionPoolConfiguration.builder(connectionFactory)
-                .maxIdleTime(Duration.ofMillis(1000))
-                .maxSize(settings.getPoolSize())
-                .build();
-
-        return new ConnectionPool(configuration);
+    public R2dbc r2dbc(ConnectionFactory connectionFactory) {
+        return new R2dbc(connectionFactory);
     }
 }
