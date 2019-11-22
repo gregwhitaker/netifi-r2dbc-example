@@ -30,6 +30,12 @@ public class ProductDao {
     @Autowired
     private R2dbc r2dbc;
 
+    /**
+     * Retrieves product information for a single product id.
+     *
+     * @param productId product identifier
+     * @return
+     */
     public Mono<ProductInfoResponse> getProduct(long productId) {
         return Mono.defer(() -> r2dbc.withHandle(handle -> {
             final String sql = "SELECT * FROM products WHERE id = $1";
