@@ -38,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Mono<ProductInfoResponse> getProduct(ProductInfoRequest message, ByteBuf metadata) {
+        LOG.info("Received getProduct request for: " + message.getProductId());
         return productDao.getProduct(message.getProductId());
     }
 }
