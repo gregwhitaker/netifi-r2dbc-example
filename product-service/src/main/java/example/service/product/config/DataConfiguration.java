@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.service.product.data;
+package example.service.product.config;
 
-import example.service.product.protobuf.ProductInfoResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Component
-public class ProductDao {
-    private static final Logger LOG = LoggerFactory.getLogger(ProductDao.class);
+@Configuration
+public class DataConfiguration {
 
-    @Autowired
-    private DataSource dataSource;
+    @Bean
+    public DataSource dataSource(DataSourceProperties props) {
+        DataSourceBuilder builder = DataSourceBuilder.create();
+        builder.url(props.getUrl());
+        builder.username(props.getUsername());
+        builder.password(props.getPassword());
 
-    public Mono<ProductInfoResponse> getProduct(long productId) {
-        return null;
+        return builder.build();
     }
 }

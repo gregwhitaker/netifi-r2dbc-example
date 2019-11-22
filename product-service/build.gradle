@@ -23,15 +23,17 @@ dependencies {
     protobuf project(':product-service-idl')
 
     implementation 'com.netifi:netifi-spring-boot-starter'
+    implementation 'org.springframework:spring-jdbc'
+    implementation 'com.zaxxer:HikariCP:3.3.0'
     implementation 'org.postgresql:postgresql:42.2.5'
-    implementation 'org.flywaydb:flyway-core:6.0.8'
+    implementation 'org.flywaydb:flyway-core'
 }
 
 mainClassName = 'example.service.product.ProductServiceApplication'
 
 // Database
 flyway {
-    url = 'jdbc:postgresql://localhost:54320/postgres'
+    url = 'jdbc:postgresql://localhost:5432/postgres'
     user = 'postgres'
     password = 'postgres'
 }
