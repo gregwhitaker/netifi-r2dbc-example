@@ -16,20 +16,19 @@
 package example.service.product.data;
 
 import example.service.product.protobuf.ProductInfoResponse;
+import io.r2dbc.pool.ConnectionPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import javax.sql.DataSource;
-
 @Component
 public class ProductDao {
     private static final Logger LOG = LoggerFactory.getLogger(ProductDao.class);
 
     @Autowired
-    private DataSource dataSource;
+    private ConnectionPool connPool;
 
     public Mono<ProductInfoResponse> getProduct(long productId) {
         return null;

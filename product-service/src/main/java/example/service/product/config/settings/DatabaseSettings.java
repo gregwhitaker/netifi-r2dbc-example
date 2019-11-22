@@ -27,6 +27,7 @@ public class DatabaseSettings {
     private String name;
     private String username;
     private String password;
+    private int poolSize;
 
     public String getHostname() {
         return hostname;
@@ -66,5 +67,13 @@ public class DatabaseSettings {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getPoolSize() {
+        return poolSize;
+    }
+
+    public void setPoolSize(int poolSize) {
+        this.poolSize = poolSize;
     }
 }

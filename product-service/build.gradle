@@ -32,6 +32,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.2.5'
     implementation 'org.flywaydb:flyway-core'
     implementation 'io.r2dbc:r2dbc-postgresql:1.0.0.M6'
+    implementation 'io.r2dbc:r2dbc-pool:0.8.0.M8'
 }
 
 mainClassName = 'example.service.product.ProductServiceApplication'

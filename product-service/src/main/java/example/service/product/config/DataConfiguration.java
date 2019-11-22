@@ -16,12 +16,16 @@
 package example.service.product.config;
 
 import example.service.product.config.settings.DatabaseSettings;
+import io.r2dbc.pool.ConnectionPool;
+import io.r2dbc.pool.ConnectionPoolConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
 
 @Configuration
 @EnableConfigurationProperties({
@@ -40,5 +44,15 @@ public class DataConfiguration {
                 .build();
 
         return new PostgresqlConnectionFactory(config);
+    }
+
+    @Bean
+    public ConnectionPool connectionPool(ConnectionFactory connectionFactory, DatabaseSettings settings) {
+        ConnectionPoolConfiguration configuration = ConnectionPoolConfiguration.builder(connectionFactory)
+                .maxIdleTime(Duration.ofMillis(1000))
+                .maxSize(settings.getPoolSize())
+                .build();
+
+        return new ConnectionPool(configuration);
     }
 }
