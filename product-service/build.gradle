@@ -19,6 +19,12 @@ plugins {
     id "org.flywaydb.flyway" version "6.0.8"
 }
 
+repositories {
+    maven { url "http://repo.spring.io/libs-release" }
+    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "http://repo.spring.io/libs-snapshot" }
+}
+
 dependencies {
     protobuf project(':product-service-idl')
 
@@ -27,6 +33,7 @@ dependencies {
     implementation 'com.zaxxer:HikariCP:3.3.0'
     implementation 'org.postgresql:postgresql:42.2.5'
     implementation 'org.flywaydb:flyway-core'
+    implementation 'io.r2dbc:r2dbc-postgresql:1.0.0.M6'
 }
 
 mainClassName = 'example.service.product.ProductServiceApplication'

@@ -15,23 +15,21 @@
  */
 package example.service.product.config;
 
+import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
+import io.r2dbc.postgresql.PostgresqlConnectionFactory;
+import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class DataConfiguration {
 
     @Bean
-    public DataSource dataSource(DataSourceProperties props) {
-        DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.url(props.getUrl());
-        builder.username(props.getUsername());
-        builder.password(props.getPassword());
+    public ConnectionFactory connectionFactory(DataSourceProperties props) {
+        PostgresqlConnectionConfiguration config = PostgresqlConnectionConfiguration.builder()
+                .build();
 
-        return builder.build();
+        return new PostgresqlConnectionFactory(config);
     }
 }
