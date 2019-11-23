@@ -43,6 +43,8 @@ public class ProductDao {
      */
     public Mono<ProductInfoResponse> getProduct(long productId) {
         return Mono.defer(() -> r2dbc.withHandle(handle -> {
+            LOG.info("Retrieving product from database: {}", productId);
+            
             final String productSql = "SELECT * FROM products WHERE id = $1";
             final String skuSql = "SELECT * FROM skus WHERE product_id = $1";
 
