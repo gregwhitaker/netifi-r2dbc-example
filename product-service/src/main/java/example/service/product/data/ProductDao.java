@@ -28,6 +28,9 @@ import reactor.core.publisher.Mono;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Dao for retrieving product information from the database.
+ */
 @Component
 public class ProductDao {
     private static final Logger LOG = LoggerFactory.getLogger(ProductDao.class);
@@ -39,12 +42,12 @@ public class ProductDao {
      * Retrieves product information for a single product id.
      *
      * @param productId product identifier
-     * @return
+     * @return a {@link ProductInfoResponse} if found; otherwise an Empty
      */
     public Mono<ProductInfoResponse> getProduct(long productId) {
         return Mono.defer(() -> r2dbc.withHandle(handle -> {
             LOG.info("Retrieving product from database: {}", productId);
-            
+
             final String productSql = "SELECT * FROM products WHERE id = $1";
             final String skuSql = "SELECT * FROM skus WHERE product_id = $1";
 
@@ -90,4 +93,3 @@ public class ProductDao {
         .next()); // withHandle is a Flux, need to convert to Mono
     }
 }
-
