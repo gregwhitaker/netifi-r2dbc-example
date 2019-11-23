@@ -31,12 +31,10 @@ services:
       - broker1
       - product-db
 
-  store-app:
-    container_name: store-app
-    image: netifi-r2dbc-example/store-app
+  client:
+    container_name: client
+    image: netifi-r2dbc-example/client
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
-    ports:
-      - "8080:8080"
     depends_on:
       - broker1
