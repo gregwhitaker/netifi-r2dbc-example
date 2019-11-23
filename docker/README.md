@@ -10,7 +10,7 @@ This Docker Compose script will create the following containers:
 
 - `broker1` - An instance of the Netifi Broker.
 - `product-service` - The example product information service.
-- `store-app` - The example storefront application. 
+- `product-db` - The product information database. 
     
 ## Stopping the Example
 In the current directory, run the following command to stop the example:
