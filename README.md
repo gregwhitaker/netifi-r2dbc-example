@@ -9,12 +9,43 @@ Run the following command to build the example:
 ## Running the Example
 Follow the steps below to run the example application:
 
-1. Start a Netifi Broker and the example services using the following commands:
+1. Run the following commands to start a Netifi Broker, the product service and its database:
 
         cd docker
         docker-compose up
         
-2. In a web browser, access the store front at [http://localhost:8080/product/001](http://localhost:8080/product/001).
+2. Run the following command to start a client instance and retrieve product information for product `3`:
+
+        docker run -e SPRING_PROFILES_ACTIVE='localdocker' netifi-r2dbc-example/client 3
+        
+    If successful, you will see the following in the console:
+
+        productId: 3
+        shortName: "bwauemjynyssyovuggqyc"
+        longName: "tsmgdvspbsitghphqacpzormjgeqrchepuusnuirbl"
+        description: "xvwgacykdzjahkatkhobqpspvdafsnuiuiffdxblkixbkuxpgeujjviyncjmoccdyxnqkwbhqjqmtbyglqzgxciukuyowryvyruxgxgmbpyafcscxulexkmdwilpwf"
+        active: true
+        skus {
+          sku: "737-674"
+          size: "S"
+          colorway: "Red"
+          prices {
+            list: 14.67
+            msrp: 62.61
+            sale: 65.96
+          }
+        }
+        skus {
+          sku: "302-014"
+          active: true
+          size: "L"
+          colorway: "Blue"
+          prices {
+            list: 69.05
+            msrp: 78.24
+            sale: 34.65
+          }
+        }
 
 ## Bugs and Feedback
 For bugs, questions, and discussions please use the [Github Issues](https://github.com/gregwhitaker/netifi-r2dbc-example/issues).
