@@ -15,13 +15,17 @@
  */
 package example.service.product.data;
 
+import example.service.product.protobuf.PriceInfo;
 import example.service.product.protobuf.ProductInfoResponse;
+import example.service.product.protobuf.SkuInfo;
 import io.r2dbc.client.R2dbc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Component
 public class ProductDao {
@@ -38,18 +42,46 @@ public class ProductDao {
      */
     public Mono<ProductInfoResponse> getProduct(long productId) {
         return Mono.defer(() -> r2dbc.withHandle(handle -> {
-            final String sql = "SELECT * FROM products WHERE id = $1";
+            final String productSql = "SELECT * FROM products WHERE id = $1";
+            final String skuSql = "SELECT * FROM skus WHERE product_id = $1";
 
-            return handle.select(sql, productId)
+            Mono<ProductInfoResponse.Builder> product = handle.select(productSql, productId)
                     .mapRow((row, rowMetadata) -> ProductInfoResponse.newBuilder()
                             .setProductId(row.get("id", Long.class))
                             .setActive(row.get("active", Boolean.class))
                             .setShortName(row.get("short_name", String.class))
                             .setLongName(row.get("long_name", String.class))
-                            .setDescription(row.get("description", String.class))
-                            .build())
+                            .setDescription(row.get("description", String.class)))
                     .next();
+
+            Mono<List<SkuInfo.Builder>> skus = handle.select(skuSql, productId)
+                    .mapRow((row, rowMetadata) -> {
+                        PriceInfo priceInfo = PriceInfo.newBuilder()
+                                .setList(row.get("price_list", Double.class))
+                                .setMsrp(row.get("price_msrp", Double.class))
+                                .setSale(row.get("price_sale", Double.class))
+                                .build();
+
+                        return SkuInfo.newBuilder()
+                                .setSku(row.get("id", String.class))
+                                .setActive(row.get("active", Boolean.class))
+                                .setSize(row.get("size", String.class))
+                                .setColorway(row.get("colorway", String.class))
+                                .setPrices(priceInfo);
+                    })
+                    .collectList();
+
+            return product.zipWith(skus)
+                    .map(objects -> {
+                        ProductInfoResponse.Builder pBuilder = objects.getT1();
+                        List<SkuInfo.Builder> sBuilders = objects.getT2();
+
+                        sBuilders.forEach(pBuilder::addSkus);
+
+                        return pBuilder.build();
+                    });
         })
         .next());
     }
 }
+

@@ -21,6 +21,6 @@ public class ProductNotFoundException extends RSocketException {
 
     @Override
     public int errorCode() {
-        return 100;
+        return 0x00000201;
     }
 }
