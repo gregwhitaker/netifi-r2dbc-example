@@ -35,6 +35,9 @@ public class ClientApplication {
         SpringApplication.run(ClientApplication.class, args);
     }
 
+    /**
+     * Runs the client application.
+     */
     @Component
     public class Runner implements CommandLineRunner {
 
@@ -43,13 +46,15 @@ public class ClientApplication {
 
         @Override
         public void run(String... args) throws Exception {
+            // Build request to send to Product Service
             ProductInfoRequest request = ProductInfoRequest.newBuilder()
-                    .setProductId(1)
+                    .setProductId(getProductIdFromArgs(args))
                     .build();
 
             try {
                 LOG.info("Retrieving Product: {}", request.getProductId());
 
+                // Send the request to the product service and block until we get a response
                 ProductInfoResponse response = productClient.getProduct(request).block();
 
                 LOG.info("Response: \n" + response.toString());
@@ -57,6 +62,26 @@ public class ClientApplication {
                 // Error handling in RSocket is currently broken as you are not able
                 // to set an application specific error code on ApplicationErrorException
                 LOG.error(e.getMessage(), e);
+            }
+
+            System.exit(1);
+        }
+
+        /**
+         * Gets the product id to retrieve from the command line arguments.
+         *
+         * @param args command line arguments
+         * @return product identifier
+         */
+        private int getProductIdFromArgs(String... args) {
+            if (args.length != 1) {
+                throw new IllegalArgumentException("Invalid number of arguments");
+            }
+
+            try {
+                return Integer.parseInt(args[0]);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Product id must be an integer");
             }
         }
     }
