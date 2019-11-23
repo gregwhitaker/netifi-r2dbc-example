@@ -22,7 +22,7 @@ Follow the steps below to run the example application:
         cd docker
         docker-compose up
         
-2. Run the following command to start a client instance and retrieve product information for product `3`:
+2. In a new terminal, run the following command to start a client instance and retrieve product information for product `3`:
 
         docker run -e SPRING_PROFILES_ACTIVE='localdocker' netifi-r2dbc-example/client 3
         
