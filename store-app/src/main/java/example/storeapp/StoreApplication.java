@@ -40,7 +40,7 @@ public class StoreApplication {
         @Override
         public void run(String... args) throws Exception {
             ProductInfoRequest request = ProductInfoRequest.newBuilder()
-                    .setProductId(1)
+                    .setProductId(1_000)
                     .build();
 
             ProductInfoResponse response = productClient.getProduct(request)

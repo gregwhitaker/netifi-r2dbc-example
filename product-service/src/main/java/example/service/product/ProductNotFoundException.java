@@ -1,6 +1,11 @@
 package example.service.product;
 
-public class ProductNotFoundException extends RuntimeException {
+import io.rsocket.exceptions.RSocketException;
+
+/**
+ * Exception thrown when a product cannot be found in the database.
+ */
+public class ProductNotFoundException extends RSocketException {
 
     private final long productId;
 
@@ -12,5 +17,10 @@ public class ProductNotFoundException extends RuntimeException {
 
     public long getProductId() {
         return productId;
+    }
+
+    @Override
+    public int errorCode() {
+        return 100;
     }
 }
