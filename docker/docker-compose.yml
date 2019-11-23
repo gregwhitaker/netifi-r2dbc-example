@@ -30,11 +30,3 @@ services:
     depends_on:
       - broker1
       - product-db
-
-  client:
-    container_name: client
-    image: netifi-r2dbc-example/client
-    environment:
-      - "SPRING_PROFILES_ACTIVE=docker"
-    depends_on:
-      - broker1
