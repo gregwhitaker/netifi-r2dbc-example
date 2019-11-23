@@ -1,6 +1,14 @@
 # netifi-r2dbc-example
 An example of accessing a database using [R2DBC](https://r2dbc.io) in a [Netifi](https://www.netifi.com) RSocket application.
 
+## Project Structure
+This example contains the following projects / directories:
+
+- [client](client) - Client application that calls the `product-service` to retrieve product information.
+- [product-service-idl](product-service-idl) - Defines the API contract exposed by the `product-service`.
+- [product-service](product-service) - Service that retrieves product information from the database.
+- [docker](docker) - Docker Compose configuration for running the example. 
+
 ## Building the Example
 Run the following command to build the example:
 
