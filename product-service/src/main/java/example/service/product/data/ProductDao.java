@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -57,9 +58,9 @@ public class ProductDao {
             Mono<List<SkuInfo.Builder>> skus = handle.select(skuSql, productId)
                     .mapRow((row, rowMetadata) -> {
                         PriceInfo priceInfo = PriceInfo.newBuilder()
-                                .setList(row.get("price_list", Double.class))
-                                .setMsrp(row.get("price_msrp", Double.class))
-                                .setSale(row.get("price_sale", Double.class))
+                                .setList(row.get("price_list", BigDecimal.class).doubleValue())
+                                .setMsrp(row.get("price_msrp", BigDecimal.class).doubleValue())
+                                .setSale(row.get("price_sale", BigDecimal.class).doubleValue())
                                 .build();
 
                         return SkuInfo.newBuilder()

@@ -29,9 +29,9 @@ CREATE TABLE skus (
     active      BOOLEAN         DEFAULT TRUE NOT NULL,
     size        VARCHAR(50)     NOT NULL,
     colorway    VARCHAR(100)    NOT NULL,
-    price_list  MONEY           NOT NULL,
-    price_msrp  MONEY           NOT NULL,
-    price_sale  MONEY           NOT NULL
+    price_list  NUMERIC         NOT NULL,
+    price_msrp  NUMERIC         NOT NULL,
+    price_sale  NUMERIC         NOT NULL
 );
 
 -- DML --
