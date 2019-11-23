@@ -46,6 +46,7 @@ public class ProductDao {
             final String productSql = "SELECT * FROM products WHERE id = $1";
             final String skuSql = "SELECT * FROM skus WHERE product_id = $1";
 
+            // Get product data
             Mono<ProductInfoResponse.Builder> product = handle.select(productSql, productId)
                     .mapRow((row, rowMetadata) -> ProductInfoResponse.newBuilder()
                             .setProductId(row.get("id", Long.class))
@@ -55,6 +56,7 @@ public class ProductDao {
                             .setDescription(row.get("description", String.class)))
                     .next();
 
+            // Get SKU data
             Mono<List<SkuInfo.Builder>> skus = handle.select(skuSql, productId)
                     .mapRow((row, rowMetadata) -> {
                         PriceInfo priceInfo = PriceInfo.newBuilder()
@@ -72,6 +74,7 @@ public class ProductDao {
                     })
                     .collectList();
 
+            // Combine product data with SKU data
             return product.zipWith(skus)
                     .map(objects -> {
                         ProductInfoResponse.Builder pBuilder = objects.getT1();
@@ -82,7 +85,7 @@ public class ProductDao {
                         return pBuilder.build();
                     });
         })
-        .next());
+        .next()); // withHandle is a Flux, need to convert to Mono
     }
 }
 
