@@ -21,9 +21,12 @@ import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
+
+import javax.sql.DataSource;
 
 import static io.r2dbc.spi.ConnectionFactoryOptions.DATABASE;
 import static io.r2dbc.spi.ConnectionFactoryOptions.DRIVER;
@@ -38,6 +41,30 @@ import static io.r2dbc.spi.ConnectionFactoryOptions.USER;
         DatabaseSettings.class
 })
 public class DataConfiguration {
+
+    // This is needed because R2DBC doesn't use a standard DataSource
+    // for connection information which causes Flyway migrations to not
+    // happen automatically on startup as it is depending on auto-detecting
+    // a DataSource.
+    @Bean
+    public DataSource dataSource(DatabaseSettings settings) {
+        DataSourceBuilder dsBuilder = DataSourceBuilder.create();
+
+        dsBuilder.url(String.format("jdbc:postgresql://%s:%s/%s",
+                settings.getHostname(),
+                settings.getPort(),
+                settings.getName()));
+
+        if (!StringUtils.isEmpty(settings.getUsername())) {
+            dsBuilder.username(settings.getUsername());
+        }
+
+        if (!StringUtils.isEmpty(settings.getPassword())) {
+            dsBuilder.password(settings.getPassword());
+        }
+
+        return dsBuilder.build();
+    }
 
     @Bean
     public ConnectionFactory connectionFactory(DatabaseSettings settings) {
