@@ -1,6 +1,14 @@
 # netifi-r2dbc-example
 An example of accessing a database using [R2DBC](https://r2dbc.io) in a [Netifi](https://www.netifi.com) RSocket application.
 
+## What is Netifi?
+[Netifi](https://www.netifi.com) is a platform for building cloud-native applications with the power of [RSocket](http://rsocket.io).
+
+Netifi provides service discovery, load-balancing, streaming, and back-pressure without deploying a whole host of infrastructure 
+components and without polluting your code with circuit breakers and client-side load-balancing. 
+
+Check out [www.netifi.com](https://www.netifi.com) for more information.
+
 ## Project Structure
 This example contains the following projects / directories:
 
